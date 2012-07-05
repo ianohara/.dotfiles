@@ -36,8 +36,6 @@ export CLICOLOR=cons25
 # Aliases #
 alias ls="ls -G"
 alias lsa="ls -a"
-alias lsd="ls; echo 'Lucy'"
-alias stcd="cd ~/Documents/School/Spring 2011/StorqueUAV"
 alias home="cd ~"
 alias school="cd ~/Documents/School/2011_fall"
 alias modlab="cd ~/Documents/School/Modlab"

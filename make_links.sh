@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Custom directory, so it should not exist.
 ln -s "$PWD/.tmux-conf-scripts/" ~/.tmux-conf-scripts
 
 echo "Moving ~/.bash_profile to ~/.bash_profile.bak"

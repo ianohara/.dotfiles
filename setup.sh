@@ -32,6 +32,11 @@ cd ~
 git clone git://github.com/altercation/vim-colors-solarized.git ~/.vim-colors-solarized
 cd $SAVE_DIR
 PWD=$SAVE_DIR # Do I need to do this, or will PWD change even when in a script?
+
+if [ ! -e "$PWD/.vim/bundle" ]; then
+    mkdir "$PWD/.vim/bundle"
+fi
+
 echo  "Now linking ~/.vim-colors-solarized to $PWD/.vim/bundle/vim-colors-solarized" 
 ln -s ~/.vim-colors-solarized "$PWD/.vim/bundle/vim-colors-solarized"
 

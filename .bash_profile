@@ -15,9 +15,11 @@ export PATH
 export CPLUS_INCLUDE_PATH="/usr/local/include:$CPLUS_INCLUDE_PATH"
 
 # ROS Fuerte setup
-source /opt/ros/fuerte/setup.bash
-export ROS_OS_OVERRIDE=osx:homebrew
-export ROS_PACKAGE_PATH="/Users/ianohara/ros-pkgs:/Users/ianohara/modlab:${ROS_PACKAGE_PATH}"
+if [ -e "/opt/ros/fuerte" ]; then
+    source /opt/ros/fuerte/setup.bash
+    export ROS_OS_OVERRIDE=osx:homebrew
+    export ROS_PACKAGE_PATH="/Users/ianohara/ros-pkgs:/Users/ianohara/modlab:${ROS_PACKAGE_PATH}"
+fi
 
 export PYTHONPATH="/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/:/usr/local/lib/python2.7/site-packages:/usr/local/lib/python:/Users/ianohara/Documents/git_projects/python/:/Users/ianohara/Documents/personal_projects/Python/:${PYTHONPATH}"
 

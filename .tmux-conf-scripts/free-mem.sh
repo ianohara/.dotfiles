@@ -1,6 +1,8 @@
-if [ `uname` == "Darwin" ]; then
+if [ -n `uname | grep Darwin` ]; then
+    echo Found Darwin >> /tmp/debug
     TOP_OPT="-l 1"
-elif [ `uname` == "Linux" ]; then
+elif [ -n `uname | grep Linux` ]; then
+    echo Found Linux >> /tmp/debug
     TOP_OPT="-n 1"
 fi
 

@@ -1,35 +1,54 @@
 #!/bin/sh
 
-# Custom directory, so it should not exist.
-ln -s "$PWD/.tmux-conf-scripts/" ~/.tmux-conf-scripts
+echo "What directory would you like to backup your current .dotfiles to (empty for no backup)?"
+read BACKDIR
 
-echo "Moving ~/.bash_profile to ~/.bash_profile.bak"
-mv ~/.bash_profile ~/.bash_profile.bak
-echo "Symlinking ~/.bash_profile to $PWD/.bash_profile"
-ln -s "$PWD/.bash_profile" ~/.bash_profile
-echo  "Woot!\n\n"
+BACKDIR=`echo $BACKDIR | sed 's!/$//'`
 
-echo "Moving ~/.vimrc to ~/.vimrc.bak"
-mv ~/.vimrc ~/.vimrc.bak
-echo "Symlinking ~/.vimrc to $PWD/.vimrc"
-ln -s "$PWD/.vimrc" ~/.vimrc
-echo  "Woot!\n\n"
+if [ ( -n "$BACKDIR" ) && ( ! -d "$BACKDIR" ) ]; 
+    echo "The Backup directory specified ($BACKDIR) does not exist."
+    exit 1
+fi
 
-echo "Moving ~/.vim to ~/.vim.bak"
-mv ~/.vim ~/.vim.bak
-echo "Symlinking ~/.vim to $PWD/.vim"
-ln -s "$PWD/.vim" ~/.vim
-echo  "Woot!\n\n"
+# Make $1 a symlink pointing to $2 and backup $1 if the user
+# has already asked us to.
+linkit() {
+    local DATE=`date +%Y-%m-%d`
+    if [ -z "$1" ]; then
+        echo "You must supply a link name to create."
+        return 0
+    fi
+    if [ -z "$2" ]; then
+        echo "You must file the source to which the link will point"
+        return 0
+    fi
 
-echo "Moving ~/.tmux.conf to ~/.tmux.conf.bak"
-mv ~/.tmux.conf ~/.tmux.conf.bak
-echo "Symlinking ~/.tmux.conf to $PWD/.tmux.conf"
-ln -s "$PWD/.tmux.conf" ~/.tmux.conf
+    if [ ( -e "$1" ) && ( -n "$BACKDIR" ) ]; then
+        echo "Moving $1 to $BACKDIR/$1.$DATE.bak"
+        mv "$1" "$BACKDIR/$1.$DATE.bak"
+    elif [ ( -e "$1" ) && ( -z "$BACKDIR" ) ]; then
+        echo "Deleting old $1 in preparation for linking."
+        rm $1
+    fi
+
+    if [ ! -e "$2" ]; then
+        echo "The source to link ($2) to does not exist!"
+        return 0
+    fi
+    echo "Making $1 point to $2"
+    ln -s "$2" "$1"
+}
+
+linkit "~/.tmux-conf-scripts" "$PWD/.tmux-conf-scripts/"
+linkit "~/.bash_profile" "$PWD/.bash_profile"
+linkit "~/.vimrc" "$PWD/.vimrc"
+linkit "~/.vim" "$PWD/.vim/"
+linkit "~/.tmux.conf" "$PWD/.tmux.conf"
 
 echo  "Cloning the solarized color scheme from altercation's account on github..."
-SAVE_DIR=$PWD
-cd ~
 git clone git://github.com/altercation/vim-colors-solarized.git ~/.vim-colors-solarized
+<<<<<<< HEAD
+=======
 cd $SAVE_DIR
 PWD=$SAVE_DIR # Do I need to do this, or will PWD change even when in a script?
 
@@ -39,5 +58,10 @@ fi
 
 echo  "Now linking ~/.vim-colors-solarized to $PWD/.vim/bundle/vim-colors-solarized" 
 ln -s ~/.vim-colors-solarized "$PWD/.vim/bundle/vim-colors-solarized"
+>>>>>>> 22dcda2f2ee46665a41a507a5be06f58e6ee31bd
 
-echo  "Woot!\n\n"
+if [ ! -e "$DOTBASE/.vim/bundle/" ]; then
+    mkdir "$DOTBASE/.vim/bundle"
+fi
+linkit "$DOTBASE/.vim/bundle/vim-colors-solarized/" "~/.vim-colors-solarized"
+

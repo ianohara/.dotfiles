@@ -3,9 +3,9 @@
 echo "What directory would you like to backup your current .dotfiles to (empty for no backup)?"
 read BACKDIR
 
-BACKDIR=`echo $BACKDIR | sed 's!/$//'`
+BACKDIR=`echo "$BACKDIR" | sed 's!/$!!'`
 
-if [ ( -n "$BACKDIR" ) && ( ! -d "$BACKDIR" ) ]; 
+if [ ( -n "$BACKDIR" ) && ( ! -d "$BACKDIR" ) ]; then
     echo "The Backup directory specified ($BACKDIR) does not exist."
     exit 1
 fi
@@ -47,18 +47,6 @@ linkit "~/.tmux.conf" "$PWD/.tmux.conf"
 
 echo  "Cloning the solarized color scheme from altercation's account on github..."
 git clone git://github.com/altercation/vim-colors-solarized.git ~/.vim-colors-solarized
-<<<<<<< HEAD
-=======
-cd $SAVE_DIR
-PWD=$SAVE_DIR # Do I need to do this, or will PWD change even when in a script?
-
-if [ ! -e "$PWD/.vim/bundle" ]; then
-    mkdir "$PWD/.vim/bundle"
-fi
-
-echo  "Now linking ~/.vim-colors-solarized to $PWD/.vim/bundle/vim-colors-solarized" 
-ln -s ~/.vim-colors-solarized "$PWD/.vim/bundle/vim-colors-solarized"
->>>>>>> 22dcda2f2ee46665a41a507a5be06f58e6ee31bd
 
 if [ ! -e "$DOTBASE/.vim/bundle/" ]; then
     mkdir "$DOTBASE/.vim/bundle"

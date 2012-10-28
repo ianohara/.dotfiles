@@ -5,26 +5,26 @@ set background=dark
 
 colorscheme solarized
 
-set expandtab
 set number
-set tabstop=4
-set shiftwidth=4
 set list listchars=tab:▷⋅,trail:⋅,nbsp:⋅
 set statusline=%f%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ \ [C:%c]\ [L:%l/%L\ (%p%%)]
 set laststatus=2
+set expandtab
+set tabstop=4
+set shiftwidth=4
 
 filetype plugin indent on
 au FileType py set autoindent
 au FileType py set smartindent
 au FileType py set textwidth=79 " PEP-8 compliance
 
-" Tab completion setup.  I originally found this
-" at: http://robots.thoughtbot.com/post/27041742805/vim-you-complete-me
-imap <Tab> <C-P>
-nmap <S-Tab> >>
-imap <S-Tab> <Esc>>>i
+" For inserting newlines without entering insert mode
+nmap <CR> o<Esc>
+" For some reason <S-Enter> doesn't get caught on OS X,
+" so this doesn't work.
+nmap <S-Enter> O<Esc>
 
-set complete=.,b,u,]
-set wildmode=longest,list:longest
-set completeopt=menu,preview
+" Search settings
+set incsearch
+set hlsearch
 

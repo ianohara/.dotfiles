@@ -2,6 +2,7 @@ call pathogen#infect()
 
 syntax on
 set background=dark
+set t_Co=256
 
 colorscheme solarized
 
@@ -12,6 +13,7 @@ set laststatus=2
 set expandtab
 set tabstop=4
 set shiftwidth=4
+
 
 filetype plugin indent on
 au FileType py set autoindent
@@ -28,3 +30,8 @@ nmap <S-Enter> O<Esc>
 set incsearch
 set hlsearch
 
+" For inserting gpl3 license header into a file at line 0
+command! Gpl :0r ~/.vim/gpl3.txt
+
+" For reloading the vimrc
+command! Vimrc :so $MYVIMRC
